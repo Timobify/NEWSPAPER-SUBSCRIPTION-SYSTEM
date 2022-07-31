@@ -1,9 +1,11 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Entities
 {
     public class Subscription
     {
+        [Key]
         public int SubId { get; set; }
         public int UserId { get; set; }
         public User Users { get; set; }
