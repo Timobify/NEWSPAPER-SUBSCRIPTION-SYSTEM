@@ -46,7 +46,7 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Controllers
         {
             var subscriptions = _subscriptionService.GetAll();
             var model = _mapper.Map<IList<SubscriptionModel>>(subscriptions);
-            return Ok();
+            return Ok(model);
         }
 
         [HttpGet("{subid}")]

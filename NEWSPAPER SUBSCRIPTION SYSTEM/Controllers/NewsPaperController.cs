@@ -45,8 +45,8 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Controllers
         public IActionResult GetAll()
         {
             var newsPaper = _newsPaperService.GetAll();
-            var model = _mapper.Map<IList<NewsPaperSaveModel>>(newsPaper);
-            return Ok();
+            var model = _mapper.Map<IList<NewsPaperModel>>(newsPaper);
+            return Ok(model);
         }
         
         [HttpGet("{newsid}")]

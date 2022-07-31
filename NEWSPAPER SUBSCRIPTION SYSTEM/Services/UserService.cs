@@ -31,12 +31,15 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Services
 
             var user = _context.Users.SingleOrDefault(x => x.Username == username);
 
+            // check if username exists
             if (user == null)
                 return null;
 
+            // check if password is correct
             if (!VerifyPasswordHash(password, user.PasswordHash, user.PasswordSalt))
                 return null;
-            
+
+            // authentication successful
             return user;
         }
 
@@ -151,8 +154,8 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Services
         {
             if (password == null) throw new ArgumentNullException("password");
             if (string.IsNullOrWhiteSpace(password)) throw new ArgumentException("Value cannot be empty or whitespace only string.", "password");
-            if (storedHash.Length !=64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
-            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).","passwordHash");
+            if (storedHash.Length != 64) throw new ArgumentException("Invalid length of password hash (64 bytes expected).", "passwordHash");
+            if (storedSalt.Length != 128) throw new ArgumentException("Invalid length of password salt (128 bytes expected).", "passwordHash");
 
             using (var hmac = new System.Security.Cryptography.HMACSHA512(storedSalt))
             {
@@ -162,7 +165,7 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Services
                     if (computedHash[i] != storedHash[i]) return false;
                 }
             }
-                
+
             return true;
         }
     }
