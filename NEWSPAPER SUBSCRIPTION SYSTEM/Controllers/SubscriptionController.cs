@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using NEWSPAPER_SUBSCRIPTION_SYSTEM.Entities;
 using NEWSPAPER_SUBSCRIPTION_SYSTEM.Helpers;
-using NEWSPAPER_SUBSCRIPTION_SYSTEM.Models.NewsPapers;
 using NEWSPAPER_SUBSCRIPTION_SYSTEM.Models.Subscriptions;
 using NEWSPAPER_SUBSCRIPTION_SYSTEM.Services;
 
@@ -46,9 +45,40 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Controllers
         public IActionResult GetAll()
         {
             var subscriptions = _subscriptionService.GetAll();
-            var model = _mapper.Map<IList<NewsPaperModel>>(subscriptions);
+            var model = _mapper.Map<IList<SubscriptionModel>>(subscriptions);
             return Ok();
         }
-        
+
+        [HttpGet("{subid}")]
+        public IActionResult GetById(int subid)
+        {
+            var subscription = _subscriptionService.GetById(subid);
+            var model = _mapper.Map<SubscriptionModel>(subscription);
+            return Ok(model);
+        }
+
+        [HttpPut("{subid}")]
+        public IActionResult Update(int subid, [FromBody] SubSaveModel model)
+        {
+            var subscription = _mapper.Map<Subscription>(model);
+            subscription.SubId = subid;
+
+            try
+            {
+                _subscriptionService.Update(subscription);
+                return Ok();
+            }
+            catch (AppException e)
+            {
+                return BadRequest(new {message = e.Message});
+            }
+        }
+
+        [HttpDelete("{subid}")]
+        public IActionResult Delete(int subid)
+        {
+            _subscriptionService.Delete(subid);
+            return Ok();
+        }
     }
 }
