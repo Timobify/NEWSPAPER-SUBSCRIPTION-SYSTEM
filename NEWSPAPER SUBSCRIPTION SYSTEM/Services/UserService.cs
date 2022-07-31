@@ -63,7 +63,7 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Services
 
             if (_context.Users.Any(x =>x.Username == user.Username))
             {
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+                throw new AppException("Username " + user.Username + " is already taken");
             }
 
             byte[] passwordHash, passwordSalt;

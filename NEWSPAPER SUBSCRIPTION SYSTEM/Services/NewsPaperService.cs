@@ -37,7 +37,7 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM.Services
         {
             if (_context.NewsPapers.Any(x => x.Name == newsPaper.Name))
             {
-                throw new AppException("Name\"" + newsPaper.Name + "\" is already created");
+                throw new AppException("Name" + newsPaper.Name + " is already created");
             }
 
             _context.NewsPapers.Add(newsPaper);
