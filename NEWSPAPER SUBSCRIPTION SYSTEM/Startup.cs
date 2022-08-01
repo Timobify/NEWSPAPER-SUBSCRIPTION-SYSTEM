@@ -89,6 +89,11 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
+            app.UseCors(builder => builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader()); 
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -102,9 +107,6 @@ namespace NEWSPAPER_SUBSCRIPTION_SYSTEM
             dataContext.Database.Migrate();
 
             app.UseRouting();
-            
-            // global cors policy
-            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyMethod());
 
             app.UseAuthentication();
             app.UseAuthorization();
